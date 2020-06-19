@@ -1,9 +1,11 @@
-<ion-card >
-  <ion-item color="danger" >
-    <ion-thumbnail slot="start">
-      <img src="../../assets/img/003-tickets.png">
-    </ion-thumbnail>
-    <div class="peliculaTitle">Pelicula</div>
-    <div class="peliculaSubTitle">Horario</div>
-  </ion-item>
-</ion-card>  
+<ion-content >
+  <ion-card *ngFor = "let order of verOrdenes()">
+    <ion-item color="danger" >
+      <ion-thumbnail slot="start">
+        <img src="../../assets/img/003-tickets.png">
+      </ion-thumbnail>
+      <div class="peliculaTitle">{{order.Pelicula}} | ({{order.Tickets}})</div>
+      <div class="peliculaSubTitle">{{order.Horario}}</div>
+    </ion-item>
+  </ion-card>  
+</ion-content  >

@@ -79,6 +79,8 @@ export class OrdenPage implements OnInit {
       this.totalTickets.push(inicio);
     }
 
+    
+
   }
 
   totalBocados(){
