@@ -6,6 +6,7 @@ import { AuthService } from 'src/services/auth.service';
 import { Usuarios } from 'src/models/usuarios';
 import { SignUpPage } from '../sign-up/sign-up.page';
 import { ModalController } from '@ionic/angular';
+import { OrdenPage } from '../orden/orden.page';
 
 @Component({
   selector: 'app-login',
@@ -28,16 +29,18 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.esOlvidado = false;
     if (localStorage.getItem('correoCreado')){
       this.correo = localStorage.getItem('correoCreado');
     }
-    this.esOlvidado = false;
+    
     this.btnIngreso = 'INICIAR SESION';
     this.usuarios = this.auth.verUsuarios();
     this.esCorrecto = true;
   }
 
   async signUp(){
+    this.salirLogin();
     const modal = await this.modalControlador.create({
       component: SignUpPage,
       componentProps: {
@@ -59,7 +62,19 @@ export class LoginPage implements OnInit {
   }
 
   salirLogin(){
-    
+    this.modalControlador.dismiss();
+  }
+
+  async orden(mail){
+    this.modalControlador.dismiss();
+    const modal = await this.modalControlador.create({
+      component: OrdenPage,
+      componentProps: {
+        correo: mail
+      }
+    });
+
+    await modal.present();
   }
 
   ingresarSesion(){
@@ -78,7 +93,8 @@ export class LoginPage implements OnInit {
         this.esCorrecto = true;
         localStorage.setItem('correo', this.correo);
         localStorage.setItem('nombre', user.Name);
-        this.router.navigate(['/tabs/inicio']);
+        this.salirLogin();
+        this.orden(this.correo)
 
       }else{
         this.esCorrecto = false;

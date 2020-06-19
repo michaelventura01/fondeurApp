@@ -1,65 +1,71 @@
 
-    <div class="back" (click)="salirBocao()">Cerrar</div>
 
-<ion-grid>
-  <ion-row>
-    <ion-col>
-      <ion-item>
-        <ion-thumbnail slot="start">
-          <img src="../../assets/img/008-popcorn.png">
-        </ion-thumbnail>
-        <ion-title class="cardTitle">Agrega un bocao</ion-title>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="6" class="ion-align-self-start">
-      <ion-select class="texto" [(ngModel)] = "bocao" placeholder="Selecione tu Snack">
-        <ion-select-option *ngFor="let bocao of bocados" [value]="bocao.id">{{bocao.Descripcion}}</ion-select-option>
-      </ion-select>
-      <hr class ="danger">
-    </ion-col>
-    <ion-col size="3" >
-      <ion-input type="number" [(ngModel)] = "cantidad" class="texto" value="0"></ion-input>
-      <hr class ="danger">
-    </ion-col>
-    <ion-col>
-      <ion-col size="3">
-        <div class="btn" (click) = "agregarBocao()">+</div>
-  
+<br>
+<div class="back" (click)="salirBocao()">Cerrar</div>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img src="../../assets/img/008-popcorn.png">
+          </ion-thumbnail>
+          <ion-title class="cardTitle">Agrega un bocao</ion-title>
+        </ion-item>
       </ion-col>
-    </ion-col>
-  </ion-row>
-  <br>
-  <ion-row *ngFor="let bocao of bocaos" >
-    <ion-col size="9">
-      <ion-item color="danger" class="bocao">
-        <ion-thumbnail slot="start">
-          <img class="imgBocao"  src="../../assets/img/003-tickets.png">
-        </ion-thumbnail>
-        <div class="peliculaTitle">
-          <div *ngFor="let bocado of bocados">
-            <p *ngIf="bocao.Bocado === bocado.id">{{bocado.Descripcion}} </p>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col size="6" class="ion-align-self-start">
+        <ion-select class="texto" [(ngModel)] = "bocao" placeholder="Selecione tu Snack">
+          <ion-select-option *ngFor="let bocao of bocados" [value]="bocao.id">{{bocao.Descripcion}}</ion-select-option>
+        </ion-select>
+        <hr class ="danger">
+      </ion-col>
+      <ion-col size="3" >
+        <ion-input type="number" [(ngModel)] = "cantidad" class="texto" value="0"></ion-input>
+        <hr class ="danger">
+      </ion-col>
+      <ion-col>
+        <ion-col size="3">
+          <div class="btn" (click) = "agregarBocao()">+</div>
+        </ion-col>
+      </ion-col>
+    </ion-row>
+    <br>
+    
+      <ion-row *ngFor="let bocao of bocaos" >
+        <ion-col size="9">
+          <ion-item color="danger" class="bocao">
+            <ion-thumbnail slot="start">
+              <img class="imgBocao"  src="../../assets/img/003-tickets.png">
+            </ion-thumbnail>
+            <div class="peliculaTitle">
+              <div *ngFor="let bocado of bocadosAll">
+                <p *ngIf="bocao.Bocado === bocado.id">{{bocado.Descripcion}} </p>
+              </div>
+            </div>
+            <div class="peliculaSubTitle">{{bocao.Precio | currency}} DOP. | {{bocao.Cantidad}} Und.</div>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <div class="dlt">
+            <ion-icon name="trash-outline" (click) = "eliminarBocao(bocao)" class="dlticon"></ion-icon>
           </div>
-        </div>
-        <div class="peliculaSubTitle">{{bocao.Precio | currency}} DOP. | {{bocao.Cantidad}} Und.</div>
-      </ion-item>
-    </ion-col>
-    <ion-col size="3">
-      <div class="dlt">
-        <ion-icon name="trash-outline" (click) = "eliminarBocao(bocao)" class="dlticon"></ion-icon>
-      </div>
-    </ion-col>
-  </ion-row>
-  <br><br>
-  <ion-row>
-    <ion-col size="12">
-        <div class="btn" (click)="procesarOrden()">
-          Confirmar Orden          
-        </div>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+        </ion-col>
+      </ion-row>
+    <br><br>
+    <ion-row>
+      <ion-col size="12">
+          <div class="btn" (click)="procesarOrden()">
+            Confirmar Orden          
+          </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+
 
 
 

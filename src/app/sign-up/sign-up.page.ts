@@ -155,6 +155,7 @@ export class SignUpPage implements OnInit {
   }
 
   async login(){
+    this.modalControlador.dismiss();
     const modal = await this.modalControlador.create({
       component: LoginPage,
       componentProps: {
@@ -162,6 +163,10 @@ export class SignUpPage implements OnInit {
     });
 
     await modal.present();
+  }
+
+  salirSignUp(){
+    this.modalControlador.dismiss();
   }
 
   async existente() {

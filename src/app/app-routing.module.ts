@@ -7,11 +7,11 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'login',
+    path: 'l',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'sign-up',
+    path: 'su',
     loadChildren: () => import('./sign-up/sign-up.module').then( m => m.SignUpPageModule)
   }
 ];

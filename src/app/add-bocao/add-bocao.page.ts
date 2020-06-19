@@ -17,6 +17,7 @@ export class AddBocaoPage implements OnInit {
   orden: any;
   esOrden: boolean;
   bocados: Array<Bocados> = new Array<Bocados>();
+  bocadosAll: Array<Bocados> = new Array<Bocados>();
   tipos: Array<Bocados> = new Array<Bocados>();
   @Input() bocaoTipo;
 
@@ -31,6 +32,7 @@ export class AddBocaoPage implements OnInit {
       this.bocaos = JSON.parse(localStorage.getItem('bocaos')) ;
     }
     this.bocados = this.bocadoServicio.verBocados(this.bocaoTipo.toString());
+    this.bocadosAll = this.bocadoServicio.verBocados('0');
     this.tipos = this.bocadoServicio.verTiposBocados();
 
   }
@@ -100,6 +102,7 @@ export class AddBocaoPage implements OnInit {
   }
   async procesarOrden(){
 
+    this.salirBocao();
     if (localStorage.getItem('funcion')){
       const modal = await this.modalControlador.create({
         component: OrdenPage,
