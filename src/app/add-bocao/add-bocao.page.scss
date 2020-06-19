@@ -1,0 +1,123 @@
+.select{
+  float: left;
+  text-align: left;
+  font-size: 15px;
+  width: 100;
+  margin: 1%;
+}
+.number{
+  float: left;
+  text-align: left;
+  font-size: 15px;
+  width: 25%;
+  margin: 1%;
+}
+.btn{
+  float: left;
+  font-size: 30px;
+  background-color: rgb(151, 8, 8);
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+  margin-top: -10px;
+}
+
+.btn:hover{
+  font-size: 31px;
+  background-color: rgb(190, 12, 12);
+}
+
+.back{
+  font-size: 20px;
+  margin-right: 15px;
+  color: #8b8888;
+  text-align: right;
+}
+
+.back:hover{
+  font-size: 21px;
+  color: #666565;
+}
+
+.dlt{
+  float: left;
+  font-size: 30px;
+  background-color: rgb(151, 8, 8);
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+  margin-top: 5px;
+  height: 70px;
+}
+
+.dlticon{
+  display: inline-flex;
+  position: relative;
+  top: 30%;
+  float: center;
+}
+
+.dlt:hover{
+  font-size: 31px;
+  background-color: rgb(190, 10, 10);
+  
+}
+
+.bocao{
+  border-radius: 10px;
+  margin-top: -20px;
+}
+
+
+
+.item{
+  margin: 2%;
+}
+.marco{
+  float: inline-start;
+  font-size: 15px;
+  margin: 2%;
+  width: 100%;
+
+}
+
+
+
+.cardTitle{
+  height: 70px;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: left;
+  color: #8b8888;
+}
+
+.danger{
+  background-color: rgb(131, 0, 0);
+}
+
+.texto{
+  color: #969696;
+  font-size: 20px;
+}
+
+.peliculaTitle{
+  position: absolute;
+  font-size: 18px;
+  float: left;
+  top: 5%;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.peliculaSubTitle{
+  position: absolute;
+  font-size: 16px;
+  float: left;
+  top: 60%;
+  font-weight: bold;
+  color: #ffffff;
+}

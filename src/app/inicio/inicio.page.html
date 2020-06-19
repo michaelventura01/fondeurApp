@@ -1,0 +1,47 @@
+<ion-content  >
+  <ion-card class="card-background">
+    <img src="../../assets/img/kilyan-sockalingum-nW1n9eNHOsc-unsplash.jpg">
+    <div class="card-title">CinemApp</div>
+    <div class="card-subtitle">Agenda tus entradas en cualquier momento</div>
+  </ion-card>  
+  <ion-card class ="cardTitle" (click)="agregarBocao(0)">
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <img src="../../assets/img/008-popcorn.png">
+      </ion-thumbnail>
+      <ion-title class="cardTitle">Agrega un bocao</ion-title>
+    </ion-item>
+  </ion-card>    
+  <ion-card>
+    <ion-card class="sideCard" >
+      <img src="../../assets/img//eiliv-sonas-aceron-iyqj9IKpQK0-unsplash.jpg">
+      <div class="addBtn" (click)="agregarBocao(1)">+</div>
+      <div class="card-bocado">Bebidas</div>
+      
+    </ion-card> 
+    <ion-card class="sideCard">
+      <img src="../../assets/img/charles-deluvio-PvAAYZx-yf8-unsplash.jpg">
+      <div class="addBtn" (click)="agregarBocao(2)">+</div>
+      <div class="card-bocado">Picaderas</div>
+    </ion-card> 
+  </ion-card>
+  <ion-card  *ngFor = "let funcion of funciones">
+    <div (click) = "elejirFuncion(funcion)"  *ngFor = "let pelicula of peliculas" >
+      <ion-item color="danger" *ngIf = "funcion.Pelicula === pelicula.id" >
+        <ion-thumbnail slot="start">
+          <img src="../../assets/img/003-tickets.png">
+        </ion-thumbnail>
+        <div class="peliculaTitle">{{pelicula.Descripcion}}</div>
+        <div class="peliculaSubTitle">{{funcion.Inicio}} - {{funcion.Fin}}</div>
+      </ion-item>
+    </div>
+  </ion-card>  
+    
+  
+  
+  
+</ion-content>
+
+
+
+

@@ -1,0 +1,77 @@
+.card-background{
+  position: relative;
+  text-align: left;
+  height: 190px;
+}
+
+.card-title{
+  position: absolute;
+  top: 40%;
+  font-size: 35px;
+  width: 100%;
+  font-weight: bold;
+  color: #ffffff;
+  padding: 5%;
+}
+
+img{
+  filter: brightness(70%);
+}
+.card-subtitle{
+  position: absolute;
+  top: 60%;
+  font-size: 15px;
+  width: 100%;
+  color: #ffffff;
+  padding: 5%;
+  font-weight: bold;
+}
+
+.danger{
+  background-color: rgb(131, 0, 0);
+  margin-top: 1px;
+}
+
+.texto{
+  color: #969696;
+  font-size: 20px;
+}
+
+.precio{
+  color: rgb(131, 0, 0);
+  font-size: 20px;
+}
+
+.precioTotal{
+  color: rgb(131, 0, 0);
+  font-size: 40px;
+  text-align: center;
+  
+}
+
+.btn{
+  float: left;
+  font-size: 30px;
+  background-color: rgb(151, 8, 8);
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+  margin-top: -10px;
+}
+
+.btn:hover{
+  font-size: 31px;
+  background-color: rgb(190, 12, 12);
+}
+
+.back{
+  color: rgb(190, 12, 12);
+  font-size: 30px;
+  margin-left: 5px ;
+}
+
+.danger{
+  background-color: rgb(131, 0, 0);
+}

@@ -1,0 +1,25 @@
+<ion-content>
+  <ion-img src="../../assets/img/029-cinema.png" class="imgCentral"></ion-img>
+  <ion-title class = "tituloLogin">CinemApp</ion-title>
+
+  <ion-item class="inputSide">
+    <ion-label position="floating" color="danger">Nombre y Apellido</ion-label>
+    <ion-input type="text" (keyup)="validarNombre()"   [(ngModel)]="nombre"></ion-input>
+  </ion-item>
+  <div class="alert" *ngIf="esNombre">El Nombre es Requerido</div>
+  
+  <ion-item class="inputSide">
+    <ion-label position="floating"  color="danger">Correo Electronico</ion-label>
+    <ion-input type="email" (keyup)="validarCorreo()" [(ngModel)]="correo"></ion-input>
+  </ion-item>
+  <div class="alert" *ngIf="esCorreo">{{mensajeCorreo}}</div>
+  
+  <ion-item class="inputSide">
+    <ion-label position="floating"  color="danger">Contraseña</ion-label>
+    <ion-input type="password" (keyup)="validarPassword()"  [(ngModel)]="password"></ion-input>
+  </ion-item>
+  <div class="alert" *ngIf="esPassword">{{mensajePassword}}</div>
+  <br>
+  <ion-button color="danger" (click) ="registrarUsuario()" class="inputSide" expand="full">Registrar Usuario</ion-button>
+  <div class="Registrar" [routerLink]="['/login']">Ya tienes cuenta, inicia sesion</div>
+</ion-content>

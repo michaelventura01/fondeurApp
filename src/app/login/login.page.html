@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon (click)="salirLogin()" class="back" name="arrow-back-outline"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-img src="../../assets/img/029-cinema.png" class="imgCentral"></ion-img>
+  <ion-title class = "tituloLogin">CinemApp</ion-title>
+
+  <ion-item class="inputSide" *ngIf="!esOlvidado">
+    <ion-label position="floating" color="danger">Correo Electronico</ion-label>
+    <ion-input type="email" [(ngModel)] = "correo"></ion-input>
+  </ion-item>
+  <ion-item class="inputSide" *ngIf="!esOlvidado">
+    <ion-label position="floating"  color="danger">Contraseña</ion-label>
+    <ion-input type="password" [(ngModel)] = "password"></ion-input>
+  </ion-item>
+  <div class="alert" *ngIf="!esCorrecto">Usuario o contraseña errone</div>
+  <ion-item class="inputSide" *ngIf="esOlvidado">
+    <ion-label  color="danger">Contacte con su administrador 809-999-9999</ion-label>
+  </ion-item>
+  <div class="forgotPassword" (click) = "olvidePassword()"  *ngIf="!esOlvidado">¿Olvidaste tu Contraseña?</div>
+  <ion-button color="danger" class="inputSide" (click) = "ingresarSesion()" expand="full">{{btnIngreso}}</ion-button>
+  <div class="Registrar" [routerLink]="['/sign-up']">No tienes Cuenta, Registrate</div>
+</ion-content>

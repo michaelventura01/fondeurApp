@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon (click)="salirOrden()" class="back" name="arrow-back-outline"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+  
+  <ion-content  >
+    <div *ngFor = "let funcion of funciones">
+      <div *ngIf = "funcion.id === funcione">
+        <ion-grid >
+        <div *ngFor = "let pelicula of peliculas">
+          <ion-card class="card-background" *ngIf = "funcion.Pelicula === pelicula.id">
+            <img src="{{pelicula.Imagen}}">
+            <div class="card-title">{{pelicula.Descripcion}}</div>
+            <div class="card-subtitle">{{funcion.Inicio}} - {{funcion.Fin}}</div>
+          </ion-card>
+        </div>
+          <br> 
+          <ion-row >
+            <ion-col size="12" class="ion-align-self-start">
+            <ion-item class="danger  ">
+              <ion-label class="texto" >No. de tickets</ion-label>
+              <ion-select class="texto" [(ngModel)] = "tickets" >
+                <ion-select-option *ngFor = "let tick of totalTickets" [value]="tick">{{tick}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <hr class="danger">
+            </ion-col>
+          </ion-row>
+          <br>
+        <ion-row>
+          <ion-col size="12" class="ion-align-self-start">
+            <ion-label class="precio">Detalles de la orden:</ion-label>    
+          </ion-col>
+        </ion-row>
+        <br>
+        <div *ngFor = "let pelicula of peliculas">
+          <ion-row *ngIf = "funcion.Pelicula === pelicula.id">
+            <ion-col size="9" class="ion-align-self-start">
+              <ion-label class="texto">Tickets para {{pelicula.Descripcion}}</ion-label>    
+            </ion-col>
+            <ion-col size="3" class="ion-align-self-start">
+              <ion-label class="precio">{{funcion.Taquilla * tickets | currency}}</ion-label>    
+            </ion-col>
+          </ion-row>
+        </div>
+        <div *ngFor = "let bocado of bocados">
+          <ion-row *ngFor = "let bocao of bocaos">
+            <ion-col size="9" *ngIf = "bocado.id === bocao.Bocado" class="ion-align-self-start">
+              <ion-label class="texto">{{bocado.Descripcion}} ({{bocao.Cantidad}} Und.)</ion-label>    
+            </ion-col>
+            <ion-col size="3" *ngIf = "bocado.id === bocao.Bocado"  class="ion-align-self-start">
+              <ion-label class="precio">{{bocado.Precio | currency}}</ion-label>    
+            </ion-col>
+          </ion-row>
+        </div>
+        <br>
+          <ion-row>
+            <ion-col size="12" class="ion-align-self-start">
+            <ion-item class="danger  ">
+              <ion-label class="texto">Metodo de pago</ion-label>
+              <ion-select [(ngModel)] = "metodoPago" class="texto">
+                <ion-select-option *ngFor = "let metodo of metodos" [value]="metodo.id">{{metodo.Descripcion}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <hr class="danger">
+            </ion-col>
+          </ion-row>
+          <br>
+          <ion-row >
+            <ion-col size="12" class="ion-align-self-start">
+              <div class="precioTotal">{{(funcion.Taquilla * tickets) + totalBocados() | currency}} DOP.</div>    
+            </ion-col>   
+          </ion-row>
+          
+          <br><br>
+          <ion-row>
+            <ion-col size="12">
+                <div class="btn" (click) = "procesarOrden()">
+                  Confirmar Orden          
+                </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+  </ion-content>
+
