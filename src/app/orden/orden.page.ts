@@ -94,8 +94,8 @@ export class OrdenPage implements OnInit {
 
 
   ordenProcesada(){
-    // error en el tipado, funciona al momento en el cliente
-    let orden: Ordenes;
+    // resolvi el error que se encontraba aqui
+    let orden: any;
     orden = this.orden;
     this.funcione = orden.Funcion;
     this.bocaos = orden.Detalle;
