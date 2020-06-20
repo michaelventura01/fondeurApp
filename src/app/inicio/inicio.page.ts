@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { AddBocaoPage } from '../add-bocao/add-bocao.page';
-import {OrdenPage} from '../orden/orden.page'
 import { Funciones } from 'src/models/funciones';
 import { Peliculas } from 'src/models/peliculas';
 import { FuncionesService } from 'src/services/funciones.service';
 import { PeliculasService } from 'src/services/peliculas.service';
+
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.page.html',
@@ -24,10 +24,10 @@ export class InicioPage implements OnInit {
 
 
   constructor(
-    private actionSheetController: ActionSheetController,
     private modalControlador: ModalController,
     private peliculaServicio: PeliculasService,
-    private funcionServicio: FuncionesService
+    private funcionServicio: FuncionesService,
+    private toastController: ToastController
 
     ) {}
 
@@ -52,19 +52,11 @@ export class InicioPage implements OnInit {
   }
 
   async existente(funcion) {
-    const actionSheet = await this.actionSheetController.create({
+    const toast = await this.toastController.create({
       header: 'Funcion Seleccionada',
-      buttons: [{
-        text: 'Ha seleccionado una funcion a las ' + funcion,
-        icon: 'checkmark-done'
-      }]
+      message: 'Ha seleccionado una funcion a las ' + funcion,
+      duration: 1500
     });
-    await actionSheet.present();
-    setTimeout(() => {
-      this.actionSheetController.dismiss();
-    }, 1500);
+    toast.present();
   }
-
-  
-
 }

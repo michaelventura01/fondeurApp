@@ -5,6 +5,8 @@ import { Peliculas } from 'src/models/peliculas';
 import { FuncionesService } from 'src/services/funciones.service';
 import { PeliculasService } from 'src/services/peliculas.service';
 import { Ordenes } from 'src/models/ordenes';
+import { ModalController } from '@ionic/angular';
+import {OrdenPage} from '../orden/orden.page';
 
 @Component({
   selector: 'app-tickets',
@@ -20,7 +22,8 @@ export class TicketsPage implements OnInit {
   constructor(
     private ordenesServicio: OrdenesService,
     private funcionServicio: FuncionesService,
-    private peliculaServicio: PeliculasService
+    private peliculaServicio: PeliculasService,
+    private modalControlador: ModalController
   ) { }
 
   ngOnInit() {
@@ -28,12 +31,26 @@ export class TicketsPage implements OnInit {
     this.ordenes = this.ordenesServicio.verOrdenes();
     this.funciones = this.funcionServicio.verFunciones();
     this.peliculas = this.peliculaServicio.verPeliculas();
-    console.log(this.ordenes);
-    console.log(this.funciones);
-    console.log(this.peliculas);
   }
 
-  verOrdenes(){
+
+  async verOrden(order){
+
+    if (localStorage.getItem('funcion')){
+      const modal = await this.modalControlador.create({
+        component: OrdenPage,
+        componentProps: {
+          orden: order,
+          estado: 2
+        }
+      });
+      await modal.present();
+    }
+  }
+
+  
+
+  verOrdenes() {
     let orders: Array<any> = new Array<any>();
     let pelicula: Peliculas;
     let funcion: Funciones;
@@ -50,7 +67,8 @@ export class TicketsPage implements OnInit {
                   Pelicula: movie.Descripcion,
                   Horario: funtion.Inicio + ' - ' + funtion.Fin,
                   Tickets: orden.Tickets,
-                  id: orden.id
+                  id: orden.id,
+                  Orden: orden
                 });
               }
             });
@@ -58,7 +76,6 @@ export class TicketsPage implements OnInit {
         });
       }
     });
-    console.log(orders);
     return orders;
   }
 }

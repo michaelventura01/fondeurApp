@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AngularFireModule} from '@angular/fire';
-import {AngularFirestoreModule, AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore} from '@angular/fire/firestore';
 import { Bocados } from 'src/models/bocados';
 
 @Injectable({
@@ -15,7 +14,7 @@ export class BocadoService {
   verBocados(tipo) {
     let bocados = new Array<Bocados>();
     this.database.collection<Bocados>('bocados').get().subscribe( (respuesta) => {
-      respuesta.forEach((contenido) => {        
+      respuesta.forEach((contenido) => {
         let bocado = contenido.data() as Bocados;
         bocado.id = contenido.id;
         bocado.ref = contenido.ref;

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AngularFireModule} from '@angular/fire';
-import {AngularFirestoreModule, AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore} from '@angular/fire/firestore';
 import { MetodoPago } from 'src/models/metodo-pago';
 @Injectable({
   providedIn: 'root'

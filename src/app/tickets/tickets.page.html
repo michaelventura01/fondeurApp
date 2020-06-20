@@ -1,6 +1,6 @@
-<ion-content >
+<ion-content>
   <ion-card *ngFor = "let order of verOrdenes()">
-    <ion-item color="danger" >
+    <ion-item color="danger" (click) = "verOrden(order.Orden)">
       <ion-thumbnail slot="start">
         <img src="../../assets/img/003-tickets.png">
       </ion-thumbnail>

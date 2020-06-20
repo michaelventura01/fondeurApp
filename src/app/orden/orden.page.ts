@@ -25,14 +25,17 @@ export class OrdenPage implements OnInit {
   metodoPago: string;
   mensajeBoton: string;
   esMetodoPago: boolean;
-  @Input() correo;
+  @Input() correo: string;
+  @Input() orden: Array<any>;
+  @Input() estado: number;
+
   bocaos: Array<Bocados> = new Array<Bocados>();
   bocados: Array<Bocados> = new Array<Bocados>();
   totalTickets: Array<number> = new Array<number>();
   funciones: Array<Funciones> = new Array<Funciones>();
   peliculas: Array<Peliculas> = new Array<Peliculas>();
   metodos: Array<MetodoPago> = new Array<MetodoPago>();
-  ordenes: Array<any> = new Array<any>();
+  ordenes: Array<Ordenes> = new Array<Ordenes>();
 
 
   constructor(
@@ -47,25 +50,34 @@ export class OrdenPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    //localStorage.setItem('bocaos','[{"id":"431384uhcid","Bocado":"gstj1i5U0q26O3qbpzr7","Cantidad":5,"Precio":"450"},{"id":"388611yeucm","Bocado":"9KQnS4xFBYsN7UguugBd","Cantidad":5,"Precio":150},{"id":"716765ycyfl","Bocado":"4k6nCUN7djk6bvaaUrdf","Cantidad":5,"Precio":480}]')
     this.esMetodoPago = true;
     this.tickets = 1;
-    if (localStorage.getItem('funcion')){
-      this.funcione = localStorage.getItem('funcion');
+
+    if ( this.estado === 1){
+      if (localStorage.getItem('funcion')){
+        this.funcione = localStorage.getItem('funcion');
+      }
+
+      if (localStorage.getItem('bocaos')){
+        this.bocaos = JSON.parse(localStorage.getItem('bocaos')) ;
+      }
+    } else if (this.estado === 2){
+      this.ordenProcesada();
     }
 
-    if (localStorage.getItem('bocaos')){
-      this.bocaos = JSON.parse(localStorage.getItem('bocaos')) ;
-    }
 
     if (localStorage.getItem('correo')){
       this.correo = localStorage.getItem('correo');
     }
 
-    if (this.correo  ){
-      this.mensajeBoton = 'Realizar Pago';
-    }else{
-      this.mensajeBoton = 'Accede para confirmar tu orden';
+    if ( this.estado === 1 ){
+      if (this.correo  ){
+        this.mensajeBoton = 'Realizar Pago';
+      }else{
+        this.mensajeBoton = 'Accede para confirmar tu orden';
+      }
+    } else if (this.estado === 2) {
+      this.mensajeBoton = 'Cancelar Ticket';
     }
 
     this.funciones = this.funcionServicio.verFunciones();
@@ -78,9 +90,19 @@ export class OrdenPage implements OnInit {
       inicio++;
       this.totalTickets.push(inicio);
     }
+  }
 
-    
 
+  ordenProcesada(){
+    // error en el tipado, funciona al momento en el cliente
+    let orden: Ordenes;
+    orden = this.orden;
+    this.funcione = orden.Funcion;
+    this.bocaos = orden.Detalle;
+    this.tickets = orden.Tickets;
+    this.metodoPago = orden.MetodoPago;
+
+    return orden;
   }
 
   totalBocados(){
@@ -117,37 +139,62 @@ export class OrdenPage implements OnInit {
   procesarOrden(funcion){
     let hoy = new Date();
     let orden: any;
-    if (this.correo){
-      if (this.metodoPago){
-        orden = {
-          Correo: this.correo,
-          Detalle: this.bocaos,
-          Estado: 1,
-          Fecha: hoy,
-          Funcion: funcion.id,
-          Taquilla:  funcion.Taquilla,
-          Tickets: this.tickets,
-          MetodoPago: this.metodoPago
-        };
-        this.esMetodoPago = true;
+    let order: any = this.orden;
 
-        if (!this.ordenServicio.registrarOrden(orden)){
-          this.ordenes.push(orden);
-          localStorage.setItem('ordenes', JSON.stringify(this.ordenes));
-          this.creado();
-          localStorage.removeItem('bocaos');
-          this.modalControlador.dismiss();
-          this.router.navigate(['/tabs/tickets']);
+    if ( this.estado === 1 ){
+      if (this.correo){
+        if (this.metodoPago){
+          orden = {
+            Correo: this.correo,
+            Detalle: this.bocaos,
+            Estado: 1,
+            Fecha: hoy,
+            Funcion: funcion.id,
+            Taquilla:  funcion.Taquilla,
+            Tickets: this.tickets,
+            MetodoPago: this.metodoPago
+          };
+          this.esMetodoPago = true;
 
+          if (!this.ordenServicio.registrarOrden(orden)){
+            this.ordenes.push(orden);
+            localStorage.setItem('ordenes', JSON.stringify(this.ordenes));
+            this.creado();
+            localStorage.removeItem('bocaos');
+            this.modalControlador.dismiss();
+            this.router.navigate(['/tabs/tickets']);
+          }else{
+            this.noCreado();
+          }
         }else{
-          this.noCreado();
+          this.esMetodoPago = false;
         }
-      }else{
-        this.esMetodoPago = false;
+      }else {
+        this.login();
       }
-    }else {
-      this.login();
+    } else if (this.estado === 2) {
+      orden = {
+        Correo: order.Correo,
+        Detalle: order.Detalle,
+        Estado: 0,
+        Fecha: order.Fecha,
+        Funcion: order.Funcion,
+        MetodoPago: order.MetodoPago,
+        Taquilla: order.Taquilla,
+        Tickets: order.Tickets,
+        id: order.id
+      };
+
+      if (this.eliminarTicket(orden)){
+        this.noCreado();
+      }else{
+        this.eliminado();
+      }
     }
+  }
+
+  eliminarTicket(orden){
+    return this.ordenServicio.modificarOrden(orden);
   }
 
   async creado() {
@@ -162,8 +209,24 @@ export class OrdenPage implements OnInit {
     setTimeout(() => {
       this.actionSheetController.dismiss();
     }, 1500);
+    location.reload();
   }
 
+  async eliminado() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Cancelado',
+      buttons: [{
+        text: 'Su orden fue cancelada con exito',
+        icon: 'checkmark-done',
+      }]
+    });
+    await actionSheet.present();
+    setTimeout(() => {
+      this.actionSheetController.dismiss();
+      this.modalControlador.dismiss();
+    }, 1500);
+    location.reload();
+  }
 
   async noCreado() {
     const actionSheet = await this.actionSheetController.create({
@@ -179,10 +242,7 @@ export class OrdenPage implements OnInit {
     }, 1500);
   }
 
-
-
   salirOrden(){
     this.modalControlador.dismiss();
   }
-
 }

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {auth} from 'firebase/app';
-import {AngularFireAuth} from '@angular/fire/auth';
 import { AuthService } from 'src/services/auth.service';
 import { Usuarios } from 'src/models/usuarios';
 import { SignUpPage } from '../sign-up/sign-up.page';
@@ -24,7 +22,7 @@ export class LoginPage implements OnInit {
 
   constructor(
     private router: Router,
-    private auth: AuthService,
+    private auths: AuthService,
     private modalControlador: ModalController
   ) { }
 
@@ -33,9 +31,8 @@ export class LoginPage implements OnInit {
     if (localStorage.getItem('correoCreado')){
       this.correo = localStorage.getItem('correoCreado');
     }
-    
     this.btnIngreso = 'INICIAR SESION';
-    this.usuarios = this.auth.verUsuarios();
+    this.usuarios = this.auths.verUsuarios();
     this.esCorrecto = true;
   }
 
@@ -94,13 +91,11 @@ export class LoginPage implements OnInit {
         localStorage.setItem('correo', this.correo);
         localStorage.setItem('nombre', user.Name);
         this.salirLogin();
-        this.orden(this.correo)
+        this.orden(this.correo);
 
       }else{
         this.esCorrecto = false;
       }
-
     }
   }
-
 }

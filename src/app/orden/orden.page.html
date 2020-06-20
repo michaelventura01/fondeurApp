@@ -20,7 +20,7 @@
             <ion-col size="12" class="ion-align-self-start">
             <ion-item class="danger  ">
               <ion-label class="texto" >No. de tickets</ion-label>
-              <ion-select class="texto" [(ngModel)] = "tickets" >
+              <ion-select class="texto" [disabled] = "estado != 1"  [(ngModel)] = "tickets" >
                 <ion-select-option *ngFor = "let tick of totalTickets" [value]="tick">{{tick}}</ion-select-option>
               </ion-select>
             </ion-item>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, ActionSheetController } from '@ionic/angular';
+import { ModalController, ActionSheetController, ToastController } from '@ionic/angular';
 import {OrdenPage} from '../orden/orden.page';
 import { Bocados } from 'src/models/bocados';
 import { BocadoService } from 'src/services/bocado.service';
@@ -24,7 +24,8 @@ export class AddBocaoPage implements OnInit {
   constructor(
     private modalControlador: ModalController,
     private bocadoServicio: BocadoService,
-    public actionSheetController: ActionSheetController
+    public actionSheetController: ActionSheetController,
+    public toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -107,6 +108,7 @@ export class AddBocaoPage implements OnInit {
       const modal = await this.modalControlador.create({
         component: OrdenPage,
         componentProps: {
+          estado: 1
         }
       });
       await modal.present();
@@ -116,17 +118,11 @@ export class AddBocaoPage implements OnInit {
   }
 
   async errorProceso() {
-    const actionSheet = await this.actionSheetController.create({
+    const toast = await this.toastController.create({
       header: 'Error',
-      buttons: [{
-        text: 'Debe elejir una funcion para procesar su orden',
-        icon: 'alert'
-      }]
+      message: 'Debe elejir una funcion para procesar su orden.',
+      duration: 1500
     });
-    await actionSheet.present();
-    setTimeout(() => {
-      this.actionSheetController.dismiss();
-    }, 1500);
+    toast.present();
   }
-
 }

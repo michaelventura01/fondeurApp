@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActionSheetController, ModalController } from '@ionic/angular';
+import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 
@@ -36,5 +36,4 @@ export class TabsPage {
       this.actionSheetController.dismiss();
     }, 1500);
   }
- 
 }

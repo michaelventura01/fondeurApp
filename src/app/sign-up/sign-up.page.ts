@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/services/auth.service';
-import {AngularFirestore} from '@angular/fire/firestore';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { Usuarios } from 'src/models/usuarios';
 import { LoginPage } from '../login/login.page';
@@ -139,7 +138,6 @@ export class SignUpPage implements OnInit {
     }, 1500);
   }
 
-
   async noCreado() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Error',
@@ -161,7 +159,6 @@ export class SignUpPage implements OnInit {
       componentProps: {
       }
     });
-
     await modal.present();
   }
 
@@ -187,6 +184,4 @@ export class SignUpPage implements OnInit {
       this.router.navigate(['/login']);
     }, 1500);
   }
-
-
 }

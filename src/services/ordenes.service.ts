@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AngularFireModule} from '@angular/fire';
-import {AngularFirestoreModule, AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore} from '@angular/fire/firestore';
 import { Ordenes } from 'src/models/ordenes';
 
 @Injectable({
@@ -16,10 +15,31 @@ export class OrdenesService {
     let result: boolean;
     this.database.collection('ordenes').add(orden).then(() => {
       result = true;
-
     }).catch(() => {
       result = false;
+    });
 
+    return result;
+  }
+
+  modificarOrden(orden){
+    let hoy = new Date();
+    let fecha = new Date(orden.Fecha.seconds * 1000);
+    let result: boolean;
+    this.database.doc('ordenes/' + orden.id).update({
+      Correo: orden.Correo,
+      Detalle: orden.Detalle,
+      Estado: orden.Estado,
+      Fecha: fecha,
+      FechaModificacion: hoy,
+      Funcion: orden.Funcion,
+      MetodoPago: orden.MetodoPago,
+      Taquilla: orden.Taquilla,
+      Tickets: orden.Tickets,
+    }).then(() => {
+     result = true;
+    }).catch(() => {
+      result = false;
     });
 
     return result;
@@ -37,5 +57,4 @@ export class OrdenesService {
     });
     return ordenes;
   }
-
 }

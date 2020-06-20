@@ -36,10 +36,8 @@ export class AuthService {
     let result: boolean;
     this.database.collection('usuarios').add(usuario).then(() => {
       result = true;
-
     }).catch(() => {
       result = false;
-
     });
 
     return result;
